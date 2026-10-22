@@ -1,7 +1,20 @@
-# 模型专属提示词要点（Model-Specific）
+# Claude 型号专属要点（**仅当目标模型是 Claude 时使用**）
 
-来源：Anthropic 官方各模型 Prompting 专页（URL 见 `SKILL.md` 第 5 节）。快照日期：2026-10-22。
-用法：先在第 1 节定位目标模型 → 读该模型章节；第 2 节是**跨模型共性陷阱**，任何模型改写前都先扫一遍。
+来源：Anthropic 官方各模型 Prompting 专页。快照日期：2026-10-22。
+
+> **使用条件**：目标模型确实是 Claude 时读本文件。目标是其他厂商时**不要读本文件**，也不要把这里的任何参数（`effort`、`thinking`、`budget_tokens`、`max_tokens` 上限、拒答类别）写进提示词。档位规范见 `references/tier-guidance.md`。
+>
+> 用法：先在第 0 节把型号归到档位 → 读第 3 节该型号章节；第 2 节是跨型号共性陷阱，改写前先扫一遍。
+
+## 0. Claude 型号 → 档位映射
+
+| 档位 | Claude 型号 | 该档在 Claude 上的主要抓手 |
+|---|---|---|
+| **顶级** | Fable 5.1 / Mythos 5.1、Fable 5 / Mythos 5、Opus 5.5 | 少写步骤多写目标；删掉脚手架与自检指令；显式要求简洁或显式要求进度更新；`effort` 取高档位 |
+| **主力** | Opus 5、Opus 4.8、Sonnet 5.5、Sonnet 5 | 目标 + 约束 + 成功标准；Sonnet 5/5.5 thinking 默认开、Opus 4.8 需显式开；`max_tokens` 要给 thinking 留空间 |
+| **便宜** | Haiku 5.5 | 写死步骤与输出格式、给足示例；搜索类任务必须配当前日期；thinking 计入 `max_tokens` |
+
+映射依据是各型号在 Claude 家族内的能力与定价位置；同档内的具体差异见第 3 节。
 
 ## 1. 路由表
 

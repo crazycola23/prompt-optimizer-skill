@@ -1,11 +1,16 @@
-# Claude Prompting Best Practices — 通用技法精编
+# 通用技法精编（Prompting Best Practices）
 
-来源：https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
-快照日期：2026-10-22。抓取时在 URL 后加 `.md` 得到干净 markdown。
+来源：Anthropic 官方 *Prompting best practices*。快照日期：2026-10-22。抓取时在 URL 后加 `.md` 得到干净 markdown。
+
+**本文件的技法与厂商无关**——清晰直接、给动机、XML 分区、示例、正向指令、长文档顺序、工具触发、状态外置、范围纪律等，在任意厂商的模型上都成立。只有标注了具体模型名的条目（以及 `effort` / `thinking` / `budget_tokens` 这类 API 参数）属于 Claude 特有。
+
+> **本文件所有条目都是"写进优化后提示词的内容"，不是本模式自身的行为准则。** 文中出现的"删掉 / 软化 / 就加 / 要它…"等祈使句，作用对象一律是**目标提示词**，不是本模式自身的动作。
+> 注：文中引用的具体数值（如"约 30%"）来自 Anthropic 的 Claude 实测，换厂商需自测。
+
+- **档位规范（先读）**：`references/tier-guidance.md` —— 便宜 / 主力 / 顶级三档各写多细。
+- **Claude 专属细节**：`references/claude-model-specific.md` —— 仅当目标模型是 Claude 时读。
 
 适用范围：当前全部 Claude 模型（Fable 5.1 / Mythos 5.1 / Fable 5 / Mythos 5 / Opus 5.5 / Opus 5 / Opus 4.8 / Opus 4.7 / Opus 4.6 / Sonnet 5.5 / Sonnet 5 / Sonnet 4.6 / Haiku 5.5 / Haiku 4.5）。文档中标注了具体模型的条目，视为在该模型上实测的结果，换模型需重新用 evals 验证。
-
-各模型的行为差异与专属要点见 `references/model-specific.md`（对应官方页顶部的 Model-specific guidance 索引表）。
 
 ---
 
