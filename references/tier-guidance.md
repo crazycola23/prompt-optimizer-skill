@@ -283,3 +283,34 @@ normalize_email 的哪一行；过程叙述（"我考虑了三种方案"）不�
 ## 8. 若目标确实是 Claude
 
 叠加 `references/claude-model-specific.md`：里面有 Claude 各型号的档位映射（顶级：Fable 5.1 / Mythos 5.1、Fable 5 / Mythos 5、Opus 5.5；主力：Opus 5、Opus 4.8、Sonnet 5.5、Sonnet 5；便宜：Haiku 5.5），以及 effort、thinking、`max_tokens`、拒答类别等只有该厂商才有的细节。**目标不是 Claude 时不要读它，也不要引入其中任何参数。**
+
+## 9. 依据与置信度（用前先看这一节）
+
+本文件的条目分三类，信任程度不同。
+
+### 9.1 官方文档直接支持（可硬信）
+
+| 条目 | 出处 |
+|---|---|
+| 强模型要删脚手架与加强语 | best-practices：`CRITICAL: You MUST use this tool when...` → `Use this tool when...`；migration「Tune anti-laziness prompting」 |
+| 强模型要删自检/复核指令 | Opus 5 专页：验证类指令造成 over-verification，应删除而非改写 |
+| 强模型给目标而非手写步骤 | best-practices：「Prefer general instructions over prescriptive steps」——`think thoroughly` 常优于手写分步计划 |
+| 强模型要显式要求简洁 | Opus 5 专页：默认回复更长，调 effort 不能可靠改变可见长度 |
+| 强模型要显式限界 | best-practices「Overeagerness」段 + Opus 5 专页「task scope and over-verification」 |
+| 弱档要显式要求搜索 | Haiku 5.5 / Sonnet 5.5 专页：低 effort 下凭训练知识作答 |
+| 低档位会提前收工、范围收窄 | Sonnet 5.5 / Haiku 5.5 / Sonnet 5 专页 |
+| effort 档位跨型号不等价、换模型要重跑 evals | 各型号专页 + 主页："treat it as measured on that model and re-check it against your own evals" |
+| 通用技法：给动机、XML 分区、正向指令、长文档顺序、先引用再作答、示例结构化 | best-practices 全文 |
+
+### 9.2 本文件的外推（方向有据、结论无直接依据，用前自测）
+
+- **"三档"这个分类本身**：官方文档按**型号**给差异，从未提出便宜/主力/顶级三分法，并且明确要求换模型后重新用 evals 验证。档位划分是本 skill 的归纳，不是文档结论。
+- **"同一档位内不同厂商行为相似"**：为了让规范跨厂商可用而做的假设，无文档依据——文档只覆盖 Claude。
+- **便宜档"写死编号步骤 / 规则代替判断 / 输出格式写死 / 长文切分"**：文档只提供弱方向的支持（低 effort 收窄范围、容易提前收工、凭记忆作答），具体做法是工程判断。
+- **示例数量按档位递减（3–5 / 2–3 / 1–2）**：官方只有"建议 3–5 个"这一条 Claude 通用建议，递减关系是本文件加的。
+- **"便宜档不要给长任务"**：文档只说低 effort 下容易提前收工，没说不能给长任务。
+
+### 9.3 经验值（可直接按你的场景改）
+
+示例篇幅预算、`每条 ≤N 字`、`最多重试 3 次`、`改动不超过 30 行才贴 diff` 这类阈值都是经验值，按目标模型自测调整。
+
