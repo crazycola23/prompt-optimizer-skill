@@ -148,6 +148,8 @@ skill 被加载后：
 ```
 prompt-optimizer/
 ├── SKILL.md                              # 契约 · 工作流 · 档位速查 · 场景组 · 输出模板 · 12 条质量门
+├── agents/
+│   └── openai.yaml                       # Codex 的 UI 元数据与调用策略（其他宿主忽略）
 ├── references/
 │   ├── tier-guidance.md                  # 档位规范（主文件）：三档清单 + 三档对照 + 判定规则 + 依据分级
 │   ├── best-practices.md                 # 通用技法精编（厂商无关，含可复制提示词块）
@@ -158,17 +160,30 @@ prompt-optimizer/
 
 ## 安装
 
+一份 `SKILL.md` 三家宿主通用（frontmatter 只含 `name` / `description` / `metadata`，符合各家的字段校验）。
+
 **DSH（用户级，全局可用）**
 
 ```bash
 git clone https://github.com/crazycola23/prompt-optimizer-skill.git ~/.dsh/skills/prompt-optimizer
 ```
 
-**DSH（项目级）** —— 放进项目的 `<projectRoot>/.dsh/skills/prompt-optimizer/`。
+DSH 会热加载：放进 skills 根目录后无需重启，会话目录里即出现 `prompt-optimizer`。项目级安装放进 `<projectRoot>/.dsh/skills/prompt-optimizer/`。
 
-**Claude Code / 其他支持 Agent Skills 的宿主** —— 把本目录放进该宿主的 skills 目录（Claude Code 为 `~/.claude/skills/` 或 `.claude/skills/`）；`SKILL.md` 的 frontmatter 是通用格式（官方只要求 `name` + `description`，DSH 另支持 `whenToUse`，其他宿主忽略它不影响发现）。
+**Codex CLI**
 
-DSH 会热加载：放进 skills 根目录后无需重启，会话目录里即出现 `prompt-optimizer`。
+```bash
+git clone https://github.com/crazycola23/prompt-optimizer-skill.git ~/.codex/skills/prompt-optimizer
+```
+
+`$CODEX_HOME` 已设置时用 `$CODEX_HOME/skills/prompt-optimizer`。`agents/openai.yaml` 提供 UI 显示名、短描述与默认提示词，并保持自动发现开启（`allow_implicit_invocation: true`）；显式调用为 `$prompt-optimizer`。已用 Codex 自带的校验器验证：
+
+```bash
+python ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py ~/.codex/skills/prompt-optimizer
+# -> Skill is valid!
+```
+
+**Claude Code / 其他支持 Agent Skills 的宿主** —— 放进该宿主的 skills 目录（Claude Code 为 `~/.claude/skills/` 或 `.claude/skills/`）。
 
 ## 用法
 
@@ -246,7 +261,8 @@ DSH 会热加载：放进 skills 根目录后无需重启，会话目录里即�
 | 用真实场景测试过 | ✅ 三个盲测场景（便宜档 / 默认档+可执行素材 / 指定 Claude 型号） |
 | 用计划使用的所有模型各测一遍 | ❌ **已知缺口**：目前只在单一模型上跑过盲测 |
 | 命名用 gerund 形式（推荐） | ⚠️ 用了名词短语 `prompt-optimizer`，官方列为"可接受的替代写法"；改名会破坏已有调用习惯与仓库地址，故保留 |
-| `whenToUse` 字段 | ⚠️ 非官方字段，DSH 扩展；其他宿主忽略后不影响发现 |
+| frontmatter 只含各家都接受的字段 | ✅ `name` + `description` + `metadata`；不依赖任何宿主的扩展键 |
+| 通过 Codex 自带校验器 | ✅ `quick_validate.py` 输出 `Skill is valid!` |
 
 ## License
 
