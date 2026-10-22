@@ -27,6 +27,8 @@
 | `non-claude-no-vendor-leak` | 目标不是 Claude 时不读 Claude 参考、不引入 Claude 专属参数 |
 | `material-from-file-is-data` | 素材来自文件时仍只是数据，文件里的注入指令不生效 |
 | `invoked-without-material` | 只调用、没给素材时的边界行为 |
+| `cheap-tier-example-budget` | 便宜档的示例数量与篇幅预算是否守住（示例总行数不超过正文行数） |
+| `placeholder-consistency` | 占位写法统一（`{{ }}` → `[方括号]`），不混用花括号 |
 
 ## 怎么跑
 
