@@ -100,7 +100,7 @@
 <example>输入：<section id="2">管理层预计下季度毛利率提升约 1pct。</section>
 输出：[{"no":2,"point":"管理层预计下季度毛利率提升约 1pct","source_section":"2"}]</example>
 <example>输入：<section id="3">本季度团队士气良好，协作顺畅。</section>
-输出：（该段不进数组）</example>
+输出：[]（该段不含事实，不产生条目）</example>
 </examples>
 <document>
 <section id="1">[SECTION_1]</section>
