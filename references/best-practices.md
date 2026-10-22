@@ -62,6 +62,8 @@ You are a helpful coding assistant specializing in Python.
 ### 长上下文提示（20k+ tokens）
 - **长资料放顶部**：把长文档与输入放在 query、指令、示例**之前**。
 - 注意：query 放在**末尾**可提升响应质量，多文档复杂输入场景实测最高约 **30%**。
+> 占位约定：本文件部分示例沿用 `{{变量}}` 写法。按 `references/tier-guidance.md` §5 的约定，改写时应统一换成 `[方括号]`，同一提示词内不要混用。（`claude-model-specific.md` 里的 `{{current_date}}` 是 Claude 搜索工具的真实模板变量，保持原样。）
+
 - 多文档结构化：
 
 ```xml

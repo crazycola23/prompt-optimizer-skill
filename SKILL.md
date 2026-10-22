@@ -88,7 +88,7 @@ whenToUse: 用户给出或即将给出一段提示词、需求描述、system pr
 | 给角色 | system prompt 里一句角色设定就有效：`You are a …` |
 | 示例 | 按档位取 1–5 个；相关、多样（覆盖边界）、用 `<example>` / `<examples>` 包裹 |
 | 正向指令 | 写"要什么"而不是"别要什么"：不要 `Do not use markdown`，要 `用流畅的散文段落作答`；必要时用格式指示器 `<smoothly_flowing_prose_paragraphs>` |
-| 消灭前言 | 加 `Respond directly without preamble. Do not start with phrases like "Here is…".` |
+| 消灭前言 | 优先正向写：`开头直接给结论，从第一句就进入正文`；需要补强时再加一句最小禁止项 `Do not start with phrases like "Here is…".` |
 | 不硬编码 | 明确要求通用解、禁止为过测试而写死值或造辅助脚本 |
 | 不过度工程 | 明确"只做被要求的改动，不加抽象、不加防御性分支、不写没动过的代码的文档" |
 | 落地文件 | 若在意残留文件：`If you create temporary files for iteration, clean them up at the end.` |
