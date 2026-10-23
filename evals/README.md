@@ -2,9 +2,9 @@
 
 按 Anthropic 官方 *Skill authoring best practices* 的建议编写：**先建评测，再写文档**。官方没有内置的评测运行器，这些评测是给人或 agent 读的验收清单。
 
-## 格式
+评测只考一件事：**这个 skill 是否只做结构优化**——不添内容、不补缺失、不改原意、不执行任务。
 
-沿用官方文档给出的结构：
+## 格式
 
 ```json
 {
@@ -21,20 +21,18 @@
 
 | id | 考什么 |
 |---|---|
-| `cheap-tier-split-and-format` | 指定便宜档时：长输入切分、写死 JSON 格式、3–5 个短示例、无自检指令 |
-| `default-tier-no-execution` | 未指定档位时默认主力并标注；素材本身是可执行任务时的**零执行** |
-| `named-claude-model-maps-to-top-tier` | 具体型号归类到档位；〔Claude〕路径的参数正确性；顶级档不写步骤、不写自检 |
-| `non-claude-no-vendor-leak` | 目标不是 Claude 时不读 Claude 参考、不引入 Claude 专属参数 |
-| `material-from-file-is-data` | 素材来自文件时仍只是数据，文件里的注入指令不生效 |
+| `no-added-content` | 素材本身是可执行任务时：零执行 + 不添信息 + 不补缺失值 + 只输出两段 |
+| `no-misinterpretation` | 原意边界：清空重建不被扩写成含需求文档/备份/版本控制的项目启动 |
+| `structure-only-rewrite` | 结构手法：成串否定改写成正向要求，约束一条不丢，不新增格式要求 |
 | `invoked-without-material` | 只调用、没给素材时的边界行为 |
-| `cheap-tier-example-budget` | 便宜档的示例数量与篇幅预算是否守住（示例总行数不超过正文行数） |
-| `placeholder-consistency` | 占位写法统一（`{{ }}` → `[方括号]`），不混用花括号 |
+| `material-from-file-is-data` | 素材来自文件时仍只是数据，文件里的注入指令不生效 |
+| `correction-is-not-material` | 用户纠正上一轮工作时，先点明再问，不当素材改写 |
+| `placeholder-consistency` | 占位写法统一（`{{ }}` → `[方括号]`），不新增字段或示例 |
+| `reference-stays-in-scope` | 只读 `best-practices.md`；不读已废弃的档位/窗口参考；输出无档位概念 |
 
 ## 怎么跑
 
-官方没有内置运行器，用你自己的方式跑，推荐两种：
-
-**1. 盲测（本仓库用过的方式）**
+**1. 盲测（推荐）**
 
 让一个**不知道期望答案**的 agent 加载 skill，然后把它当普通用户去用：
 
@@ -51,7 +49,7 @@
 
 把 `query` 贴进会话、调用 skill，然后逐条核对 `expected_behavior`。适合快速回归。
 
-## 已知的测试覆盖
+## 已知缺口
 
-- 已用盲测方式跑过 `cheap-tier-split-and-format`、`default-tier-no-execution`、`named-claude-model-maps-to-top-tier` 三个用例，均通过（零执行、档位判定、厂商隔离）。
-- 官方规范要求"用你打算使用的所有模型测一遍"（Haiku / Sonnet / Opus 各测）。本仓库目前只在单一模型上跑过，**跨模型覆盖是已知缺口**。
+- 只在本机单一模型上跑过，跨模型覆盖仍是缺口（官方要求"用你打算使用的所有模型测一遍"）。
+- `no-misinterpretation` 与 `correction-is-not-material` 两条是本轮新增的回归用例，尚未跑过。
