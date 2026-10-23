@@ -1,7 +1,7 @@
 interface:
   display_name: "Prompt Optimizer"
-  short_description: "按便宜 / 主力 / 顶级档位改写提示词，只改写不执行任务"
-  default_prompt: "Use $prompt-optimizer to rewrite the prompt I am about to paste, picking the right tier."
+  short_description: "只优化结构，不添内容、不改原意"
+  default_prompt: "Use $prompt-optimizer to optimize the structure of the prompt I am about to paste."
 
 policy:
   allow_implicit_invocation: true
